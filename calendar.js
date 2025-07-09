@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
       initialView: 'dayGridMonth',
       locale: 'es', // español
       headerToolbar: {
-        left: 'prev,next today',
         center: 'title'
       },
       events: eventos,
