@@ -21,9 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const calendar = new FullCalendar.Calendar(calendarioEl, {
       initialView: 'dayGridMonth',
       locale: 'es', // español
-      headerToolbar: {
-        center: 'title'
-      },
       events: eventos,
       eventClick: function (info) {
         const props = info.event.extendedProps;
