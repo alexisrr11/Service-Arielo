@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const eventos = turnos.map(turno => {
       return {
         title: turno.nombre,
-        start: `${turno.fecha}T${turno.hora || '09:00'}`, // por si querés hora fija si no hay
+        start: `${turno.fecha}`,
         extendedProps: {
           direccion: turno.direccion,
           telefono: turno.telefono,
