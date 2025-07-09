@@ -1,17 +1,36 @@
 function darkMode() {
   const html = document.documentElement;
   const btnModoOscuro = document.getElementById('modoOscuroBtn');
+  const modoGuardado = localStorage.getItem("modoOscuro");
 
-  btnModoOscuro.addEventListener('click', () => {
-    html.classList.toggle('dark');
+  if (modoGuardado === "activado") {
+    html.classList.add("dark");
+    btnModoOscuro.style.background = "bisque";
+    btnModoOscuro.style.color = "black";
+    btnModoOscuro.textContent = "☀️";
+  } else {
+    html.classList.remove("dark");
+    btnModoOscuro.style.background = "white";
+    btnModoOscuro.style.color = "white";
+    btnModoOscuro.textContent = "🌙";
+  }
+
+  btnModoOscuro.addEventListener("click", () => {
+    html.classList.toggle("dark");
+
+    const estaOscuro = html.classList.contains("dark");
+
+    localStorage.setItem("modoOscuro", estaOscuro ? "activado" : "desactivado");
+
     setTimeout(() => {
-      btnModoOscuro.style.background = (btnModoOscuro.style.background === "bisque" ? "white" : "bisque");
-      btnModoOscuro.style.color = (btnModoOscuro.style.color === "black" ? "white" : "black");
-      btnModoOscuro.textContent = (btnModoOscuro.textContent === "☀️" ? "🌙" : "☀️");
+      btnModoOscuro.style.background = estaOscuro ? "bisque" : "white";
+      btnModoOscuro.style.color = estaOscuro ? "black" : "white";
+      btnModoOscuro.textContent = estaOscuro ? "☀️" : "🌙";
     }, 200);
   });
 }
-console.log(darkMode());
+
+darkMode(); 
 
 //Efecto smooth sobre href
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
