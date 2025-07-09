@@ -23,8 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
       locale: 'es', // español
       headerToolbar: {
         left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek'
+        center: 'title'
       },
       events: eventos,
       eventClick: function (info) {
