@@ -35,7 +35,7 @@ function renderizarTurnos(filtros = {}) {
 
         const botonEliminar = li.querySelector("button");
         botonEliminar.addEventListener("click", function () {
-            const confirmar = confirm(`¿Estás seguro que deseas eliminar el turno de "${turno.nombre}"?`);
+            const confirmar = confirm(`¿Estás seguro que deseas eliminar "${turno.nombre}" de la lista de clientes?`);
             if (confirmar) {
                 eliminarTurno(turno);
             }
