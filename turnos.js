@@ -27,7 +27,7 @@ function renderizarTurnos(filtros = {}) {
         <p><strong>Dispositivo:</strong> ${turno.dispositivo}</p>
         <p><strong>Marca:</strong> ${turno.marca}</p>
         <p><strong>Descripción:</strong> ${turno.descripcion || "Sin descripción"}</p>
-        <button class="mt-2 bg-lime-700 text-white px-3 py-1 rounded hover:bg-lime-600 transition" data-index="${index}">
+        <button class="mt-2 bg-lime-700 text-white px-4 py-2 rounded hover:bg-lime-600 transition dark:bg-blue-900 dark:hover:bg-blue-800" data-index="${index}">
           Eliminar
         </button>
         `;
