@@ -1,7 +1,5 @@
 const form = document.getElementById("form-turno");
 const lista = document.getElementById("lista-turnos");
-
-// Obtener turnos previos desde localStorage
 let turnos = JSON.parse(localStorage.getItem("turnos")) || [];
 
 // Función para renderizar la lista
@@ -26,6 +24,8 @@ function renderizarTurnos(filtros = {}) {
         <p><strong>Dirección:</strong> ${turno.direccion}</p>
         <p><strong>Teléfono:</strong> ${turno.telefono}</p>
         <p><strong>Fecha:</strong> ${turno.fecha}</p>
+        <p><strong>Dispositivo:</strong> ${turno.dispositivo}</p>
+        <p><strong>Marca:</strong> ${turno.marca}</p>
         <p><strong>Descripción:</strong> ${turno.descripcion || "Sin descripción"}</p>
         <button class="mt-2 bg-lime-700 text-white px-3 py-1 rounded hover:bg-lime-600 transition" data-index="${index}">
           Eliminar
@@ -44,7 +44,6 @@ function renderizarTurnos(filtros = {}) {
     });
 }
 
-// Mostrar turnos al cargar
 renderizarTurnos();
 
 // Agregar nuevo turno
@@ -56,14 +55,16 @@ form.addEventListener("submit", function (e) {
         direccion: document.getElementById("direccion").value,
         telefono: document.getElementById("telefono").value,
         fecha: document.getElementById("fecha").value,
+        dispositivo: document.getElementById("dispositivo").value,
+        marca: document.getElementById("marca").value,
         descripcion: document.getElementById("descripcion").value
     };
 
     turnos.push(nuevoTurno);
-    localStorage.setItem("turnos", JSON.stringify(turnos)); // Guardar en localStorage
+    localStorage.setItem("turnos", JSON.stringify(turnos));
 
-    renderizarTurnos(); // Actualizar vista
-    form.reset(); // Limpiar formulario
+    renderizarTurnos();
+    form.reset();
 });
 
 document.getElementById("filtro-nombre").addEventListener("input", actualizarFiltro);
@@ -85,12 +86,14 @@ function eliminarTurno(turnoAEliminar) {
 
     turnos = turnos.filter(t =>
         !(t.nombre === turnoAEliminar.nombre &&
-            t.direccion === turnoAEliminar.direccion &&
-            t.telefono === turnoAEliminar.telefono &&
-            t.fecha === turnoAEliminar.fecha &&
-            t.descripcion === turnoAEliminar.descripcion)
+          t.direccion === turnoAEliminar.direccion &&
+          t.telefono === turnoAEliminar.telefono &&
+          t.fecha === turnoAEliminar.fecha &&
+          t.dispositivo === turnoAEliminar.dispositivo &&
+          t.marca === turnoAEliminar.marca &&
+          t.descripcion === turnoAEliminar.descripcion)
     );
 
     localStorage.setItem("turnos", JSON.stringify(turnos));
-    actualizarFiltro(); // para volver a renderizar la lista con filtros actuales
+    actualizarFiltro(); //volver a renderizar la lista con filtros actuales
 }
