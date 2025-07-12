@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     const calendarioEl = document.getElementById('calendar');
-
-    // Obtener turnos desde localStorage
     const turnos = JSON.parse(localStorage.getItem("turnos")) || [];
 
     // Convertir turnos a eventos FullCalendar
@@ -12,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
         extendedProps: {
           direccion: turno.direccion,
           telefono: turno.telefono,
+          dispositivo: turno.dispositivo,
+          marca: turno.marca,
           descripcion: turno.descripcion
         }
       };
@@ -20,12 +20,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // Inicializar calendario
     const calendar = new FullCalendar.Calendar(calendarioEl, {
       initialView: 'dayGridMonth',
-      locale: 'es', // español
+      locale: 'es',
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek'
+      },
       events: eventos,
       eventClick: function (info) {
         const props = info.event.extendedProps;
         alert(
-          `Nombre: ${info.event.title}\nDirección: ${props.direccion}\nTeléfono: ${props.telefono}\nDescripción: ${props.descripcion || 'Sin descripción'}`
+          `Nombre: ${info.event.title}\nDirección: ${props.direccion}\nTeléfono: ${props.telefono}\nDispositivo: ${props.dispositivo}\nMarca: ${props.marca}\nDescripción: ${props.descripcion || 'Sin descripción'}`
         );
       }
     });
