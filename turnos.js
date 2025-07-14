@@ -16,7 +16,7 @@ function renderizarTurnos(filtros = {}) {
         (fecha === "" || t.fecha === fecha)
     );
 
-    filtrados.forEach((turno, index) => {
+    filtrados.forEach((turno) => {
         const li = document.createElement("li");
         li.className = "p-4 bg-white rounded-lg shadow dark:bg-gray-800 dark:text-white";
         li.innerHTML = `
@@ -27,7 +27,7 @@ function renderizarTurnos(filtros = {}) {
         <p><strong>Dispositivo:</strong> ${turno.dispositivo}</p>
         <p><strong>Marca:</strong> ${turno.marca}</p>
         <p><strong>Descripción:</strong> ${turno.descripcion || "Sin descripción"}</p>
-        <button class="mt-2 bg-lime-700 text-white px-4 py-2 rounded hover:bg-lime-600 transition dark:bg-blue-900 dark:hover:bg-blue-800" data-index="${index}">
+        <button class="mt-2 bg-lime-700 text-white px-4 py-2 rounded hover:bg-lime-600 transition dark:bg-blue-900 dark:hover:bg-blue-800" data-id="${turno.id}">
           Eliminar
         </button>
         `;
@@ -35,9 +35,9 @@ function renderizarTurnos(filtros = {}) {
 
         const botonEliminar = li.querySelector("button");
         botonEliminar.addEventListener("click", function () {
-            const confirmar = confirm(`¿Estás seguro que deseas eliminar "${turno.nombre}" de la lista de clientes?`);
+            const confirmar = confirm(`¿Estás seguro que deseas eliminar el turno de "${turno.nombre}"?`);
             if (confirmar) {
-                eliminarTurno(turno);
+                eliminarTurno(turno.id);
             }
         });
 
@@ -51,6 +51,7 @@ form.addEventListener("submit", function (e) {
     e.preventDefault();
 
     const nuevoTurno = {
+        id: Math.random().toString(36).substr(2, 9), // ID único simple
         nombre: document.getElementById("nombre").value,
         direccion: document.getElementById("direccion").value,
         telefono: document.getElementById("telefono").value,
@@ -59,7 +60,6 @@ form.addEventListener("submit", function (e) {
         marca: document.getElementById("marca").value,
         descripcion: document.getElementById("descripcion").value
     };
-
     turnos.push(nuevoTurno);
     localStorage.setItem("turnos", JSON.stringify(turnos));
 
@@ -81,19 +81,9 @@ function actualizarFiltro() {
     renderizarTurnos({ nombre, direccion, telefono, fecha });
 }
 
-function eliminarTurno(turnoAEliminar) {
+function eliminarTurno(idTurno) {
     let turnos = JSON.parse(localStorage.getItem("turnos")) || [];
-
-    turnos = turnos.filter(t =>
-        !(t.nombre === turnoAEliminar.nombre &&
-          t.direccion === turnoAEliminar.direccion &&
-          t.telefono === turnoAEliminar.telefono &&
-          t.fecha === turnoAEliminar.fecha &&
-          t.dispositivo === turnoAEliminar.dispositivo &&
-          t.marca === turnoAEliminar.marca &&
-          t.descripcion === turnoAEliminar.descripcion)
-    );
-
+    turnos = turnos.filter(t => t.id !== idTurno);
     localStorage.setItem("turnos", JSON.stringify(turnos));
-    actualizarFiltro(); //volver a renderizar la lista con filtros actuales
+    actualizarFiltro();
 }
